@@ -41,18 +41,23 @@ export default {
     }
   },
   mounted () {
-    this.formEl = this.$el.querySelector('input, textarea, select')
-    this.formEl.addEventListener('input', this.updateIsActive)
-    this.formEl.addEventListener('input', this.updateIsFocused)
-    this.formEl.addEventListener('blur', this.updateIsFocused)
-    this.formEl.addEventListener('focus', this.updateIsFocused)
+    this.$nextTick(() => {
+      // nextTick to support inputs nested in other vue components
+      this.formEl = this.$el.querySelector('input, textarea, select')
+      if (this.formEl) {
+        this.formEl.addEventListener('input', this.updateIsActive)
+        this.formEl.addEventListener('input', this.updateIsFocused)
+        this.formEl.addEventListener('blur', this.updateIsFocused)
+        this.formEl.addEventListener('focus', this.updateIsFocused)
 
-    if (!this.for) {
-      this.labelEl = this.$el.querySelector('label')
-      this.labelEl.addEventListener('click', this.focusFormEl)
-    }
+        if (!this.for) {
+          this.labelEl = this.$el.querySelector('label')
+          this.labelEl.addEventListener('click', this.focusFormEl)
+        }
 
-    this.dispatchInput()
+        this.dispatchInput()
+      }
+    })
   },
   beforeDestroy () {
     this.formEl.removeEventListener('input', this.updateIsActive)
