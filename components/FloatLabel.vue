@@ -80,7 +80,7 @@ export default {
       this.isActive = e.target.value.length > 0
     },
     updateIsFocused (e) {
-      this.isFocused = e.target === document.activeElement && this.isActive
+      this.isFocused = e.target === document.activeElement
     }
   },
   computed: {
@@ -89,7 +89,7 @@ export default {
     },
     classObject () {
       return {
-        'vfl-label-on-input': this.on && (this.isActive || this.fixed),
+        'vfl-label-on-input': this.on || this.isActive || this.fixed,
         'vfl-label-on-focus': this.isFocused
       }
     },
@@ -112,41 +112,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.vfl-has-label {
-  position: relative;
-}
-
-.vfl-label {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0.1em;
-  overflow: hidden;
-  font-family: sans-serif;
-  font-size: 0.8em;
-  color: #aaa;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: all 0.2s ease-out;
-}
-
-.vfl-label-on-input {
-  top: -1.3em;
-  pointer-events: all;
-  opacity: 1;
-}
-
-.vfl-label-on-focus {
-  color: #0074d9;
-}
-
-.vfl-has-label input:focus,
-.vfl-has-label textarea:focus,
-.vfl-has-label select:focus {
-  outline: 0;
-}
-</style>
