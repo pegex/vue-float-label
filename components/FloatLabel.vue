@@ -36,7 +36,6 @@ export default {
     return {
       formEl: undefined,
       labelEl: undefined,
-      isActive: false,
       isFocused: false
     }
   },
@@ -45,7 +44,6 @@ export default {
       // nextTick to support inputs nested in other vue components
       this.formEl = this.$el.querySelector('input, textarea, select')
       if (this.formEl) {
-        this.formEl.addEventListener('input', this.updateIsActive)
         this.formEl.addEventListener('input', this.updateIsFocused)
         this.formEl.addEventListener('blur', this.updateIsFocused)
         this.formEl.addEventListener('focus', this.updateIsFocused)
@@ -60,7 +58,6 @@ export default {
     })
   },
   beforeDestroy () {
-    this.formEl.removeEventListener('input', this.updateIsActive)
     this.formEl.removeEventListener('input', this.updateIsFocused)
     this.formEl.removeEventListener('blur', this.updateIsFocused)
     this.formEl.removeEventListener('focus', this.updateIsFocused)
@@ -76,14 +73,8 @@ export default {
     focusFormEl () {
       this.formEl.focus()
     },
-    updateIsActive (e) {
-      this.isActive = e.target.value.length > 0
-    },
     updateIsFocused (e) {
       this.isFocused = e.target === document.activeElement
-      if (!this.isFocused) {
-        this.isActive = e.target.value.length > 0
-      }
     }
   },
   computed: {
@@ -92,7 +83,7 @@ export default {
     },
     classObject () {
       return {
-        'vfl-label-on-input': this.on || this.isActive || this.fixed,
+        'vfl-label-on-input': this.on || this.fixed,
         'vfl-label-on-focus': this.isFocused
       }
     },
