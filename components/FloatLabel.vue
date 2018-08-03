@@ -81,6 +81,9 @@ export default {
     },
     updateIsFocused (e) {
       this.isFocused = e.target === document.activeElement
+      if (!this.isFocused) {
+        this.isActive = e.target.value.length > 0
+      }
     }
   },
   computed: {
