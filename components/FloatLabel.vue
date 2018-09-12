@@ -58,9 +58,11 @@ export default {
     })
   },
   beforeDestroy () {
-    this.formEl.removeEventListener('input', this.updateIsFocused)
-    this.formEl.removeEventListener('blur', this.updateIsFocused)
-    this.formEl.removeEventListener('focus', this.updateIsFocused)
+    if (this.formEl) {
+      this.formEl.removeEventListener('input', this.updateIsFocused)
+      this.formEl.removeEventListener('blur', this.updateIsFocused)
+      this.formEl.removeEventListener('focus', this.updateIsFocused)
+    }
   },
   methods: {
     dispatchInput () {
